@@ -1,0 +1,23 @@
+<%-include('msg');%> 
+<div class="container">
+    <div class="d-flex justify-content-between">
+      <h2>profile</h2>     
+      <a class="btn btn-warning" href="/users/logoutAll">logout All</a>
+    </div>  
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>_id</th>
+          <th>Name</th>
+          <th>Username</th> 
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%=user._id%></td>
+          <td><%=user.name%></td>
+          <td><%=user.username%></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

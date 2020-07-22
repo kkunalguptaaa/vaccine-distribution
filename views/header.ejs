@@ -1,0 +1,25 @@
+<header>
+  <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Vaccine Distribution</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+        <% if (!locals.users){%>
+          <a  style="position:absolute; right: 85px;"  class="nav-item nav-link"href="/users/login">login</a>
+        <%} else {%>
+          <a  style="float: left;" class="nav-item nav-link" href="/users/profile">profile</a>
+            <%if(users.level===0){%>
+              <a  style="float: left;" class="nav-item nav-link" href="/users/addStates">Add a State</a>
+              <a  style="float: left;" class="nav-item nav-link" href="/users/addProductionCentres">Add a production Centre</a>
+            <% }if(users.level===1){%>
+              <a  style="float: left;" class="nav-item nav-link" href="/users/addHospitals">Add a Hospital</a>
+            <%}%>
+          <a style="position:absolute; right: 20px;"  class="nav-item nav-link" href="/users/logout">logout</a>
+        <%} %>
+      </div>
+    </div>
+  </nav>
+</header>
