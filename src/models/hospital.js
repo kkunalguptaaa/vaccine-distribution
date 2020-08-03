@@ -1,22 +1,15 @@
 const mongoose=require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
-const userSchema= new mongoose.Schema({
-    level:{
-        type:Number,
-        required:true,
-        trim:true,
-    },
+const hospitalSchema= new mongoose.Schema({
     owner:{
         type: mongoose.Types.ObjectId,
-        ref: "userSchema"
+        ref: "state"
     },
     seriousCases:{
         type:Number,
-        default:0
     },
     mildCases:{
         type:Number,
-        default:0
     },
     tokens:[{
         token:{
@@ -26,6 +19,6 @@ const userSchema= new mongoose.Schema({
 },{
     timestamps:true
 })
-userSchema.plugin(passportLocalMongoose);
-const User=mongoose.model('user',userSchema);
-module.exports=User;
+hospitalSchema.plugin(passportLocalMongoose);
+const  Hospital=mongoose.model(' hospital', hospitalSchema);
+module.exports= Hospital;

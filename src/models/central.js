@@ -6,18 +6,6 @@ const userSchema= new mongoose.Schema({
         required:true,
         trim:true,
     },
-    owner:{
-        type: mongoose.Types.ObjectId,
-        ref: "userSchema"
-    },
-    seriousCases:{
-        type:Number,
-        default:0
-    },
-    mildCases:{
-        type:Number,
-        default:0
-    },
     tokens:[{
         token:{
             type:String,

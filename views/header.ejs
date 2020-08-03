@@ -16,6 +16,8 @@
               <a  style="float: left;" class="nav-item nav-link" href="/users/addProductionCentres">Add a production Centre</a>
             <% }if(users.level===1){%>
               <a  style="float: left;" class="nav-item nav-link" href="/users/addHospitals">Add a Hospital</a>
+            <%}if(users.level===2){%>
+              <a  style="float: left;" class="nav-item nav-link" href="/hospitals/uploadCases">upload Cases</a>
             <%}%>
           <a style="position:absolute; right: 20px;"  class="nav-item nav-link" href="/users/logout">logout</a>
         <%} %>

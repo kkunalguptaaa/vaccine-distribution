@@ -34,6 +34,7 @@ exports.checkAuth=async(req,res,next)=>{
         next();
     }
     catch(e){
+        console.log(e)
         req.flash('error','you are not authenticated, please! authenticate.')
         res.redirect('/users/login');
     }
@@ -111,5 +112,22 @@ exports.removeExpiredTokens=async(req,res,next)=>{
             next(err)
         }
     });
+    next()
+}
+exports.fetchCases=async(req,res,next)=>{
+    if(req.user.level===0||req.user.level===1){
+        var totalMildCases=0;
+        var totalSeriousCases=0;
+        const hospitals=await User.find({owner:req.user._id})
+        for (const element of hospitals) {
+            totalMildCases=totalMildCases+element.mildCases;
+            totalSeriousCases=totalSeriousCases+element.seriousCases;
+        }
+        console.log("M"+totalMildCases)
+        console.log("S"+totalSeriousCases)
+        req.user.mildCases=totalMildCases;
+        req.user.seriousCases=totalSeriousCases;
+        await req.user.save()
+    }
     next()
 }

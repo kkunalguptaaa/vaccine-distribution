@@ -2,6 +2,7 @@ const express=require('express');
 const path=require('path')
 require('./db/mongoose')
 const userRouter=require('./routes/user');
+const hospitalRouter=require('./routes/hospital')
 const expressLayout=require('express-ejs-layouts');
 const passport = require('passport');
 const cookieParser=require('cookie-parser')
@@ -48,6 +49,7 @@ app.use((req,res,next)=>{
 app.use(passport.initialize());
 
 app.use('/users',userRouter);
+app.use('/hospitals',hospitalRouter);
 
 app.get('/',authenticate.setAuthenticatedUser,(req,res)=>{
     res.render('home',{title:"Home"});

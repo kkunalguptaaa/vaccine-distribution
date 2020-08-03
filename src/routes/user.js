@@ -20,14 +20,14 @@ userRouter.get('/addCentral',async(req,res)=>{
     try {
         const password="123";
         await User.register(user,password);  
-        res.send({msg:`${user.username} is regestred successfully`,user})
+        res.send({msg:`${user.username} is registred successfully`,user})
     } catch (error) {
         res.status(500).send(error)
     }
 })
 //only be done by central govt.
 userRouter.post('/addStates',authenticate.checkAuth,authenticate.ckeckLevel({level:0}),async(req,res)=>{
-const user=new User({username:req.body.username,level:1});
+const user=new User({username:req.body.username,owner:req.user._id,level:1});
     try{
         if(req.body.password!==req.body.confirmPassword){ 
            const error_msg="password and confirm password should be same..!";
@@ -47,7 +47,7 @@ const user=new User({username:req.body.username,level:1});
     }
 })
 userRouter.post('/addProductionCentres',authenticate.checkAuth,authenticate.ckeckLevel({level:0}),async(req,res)=>{
-    const user=new User({username:req.body.username,level:3});
+    const user=new User({username:req.body.username,owner:req.user._id,level:3});
         try{
             if(req.body.password!==req.body.confirmPassword){ 
                 const error_msg="password and confirm password should be same..!";
@@ -68,7 +68,7 @@ userRouter.post('/addProductionCentres',authenticate.checkAuth,authenticate.ckec
     })
     
 userRouter.post('/addHospitals',authenticate.checkAuth,authenticate.ckeckLevel({level:1}),async(req,res)=>{
-    const user=new User({username:req.body.username,level:2});
+    const user=new User({username:req.body.username,owner:req.user._id,level:2});
         try{
             if(req.body.password!==req.body.confirmPassword){ 
                 const error_msg="password and confirm password should be same..!";
@@ -94,7 +94,7 @@ userRouter.post('/login',authenticate.isUserAlreadyLogedIn({successRedirect:'/us
         const user=await User.findById(req.user._id);
         user.tokens.push({token});
         await user.save(); 
-        res.cookie('access_token', 'Bearer ' + token,{
+        await res.cookie('access_token', 'Bearer ' + token,{
             maxAge:60*60*1000,        //here time is in millisecond and 1s=1000ms
             httpOnly:true,
             signed:true
@@ -149,7 +149,7 @@ userRouter.get('/addHospitals',authenticate.checkAuth,authenticate.ckeckLevel({l
 userRouter.get('/login',authenticate.isUserAlreadyLogedIn({successRedirect:'/users/profile'}),async(req,res)=>{
     res.render('login',{title:"Login"});
 })
-userRouter.get('/profile',authenticate.checkAuth,async(req,res)=>{
+userRouter.get('/profile',authenticate.checkAuth,authenticate.fetchCases,async(req,res)=>{
     res.render('profile',{title:"Profile",user:req.user});
 })
 
