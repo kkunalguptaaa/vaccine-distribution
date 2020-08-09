@@ -1,28 +1,86 @@
-<%-include('msg');%> 
-<div class="container">
-    <div class="d-flex justify-content-between">
-      <h2>Case History</h2>     
-    </div>  
-    <table class="table table-striped">
-      <thead>
+  <style>
+    body
+       {
+         margin: 0;
+         padding: 0;
+         font-family: sans-serif;
+         background: url(../images/table.jpg);
+         background-size: cover;
+       }
+       #color-overlay {
+         position: relative;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         background-color:black;
+           opacity: 0.5;
+         }
+         .box
+         {
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           transform: translate(-50%,-50%);
+           width:700px;
+           padding: 40px;
+           background: rgba(0,0,0,.8);
+           box-sizing: border-box;
+           box-shadow: 0 15px 25px rgba(0,0,0,.5);
+           border-radius: 10px;
+           color: #fff;
+         }
+         tr{
+           color: #fff;
+         }
+          .box h2
+         {
+           margin: 0 0 30px;
+           padding: 0;
+           color: #fff;
+           text-align: center;
+         }
+         p{
+             color: #888;
+             text-align: center;
+         }
+         hr{
+           height: 1px;
+           background-color: #ccc;
+           border: none;
+         }
+         .btn-primary
+         {
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+         }
+   
+     </style>
+   <div id="color-overlay"></div>
+   <%-include('msg');%> 
+       <div class="box">
+       <h2>HISTORY OF CASES</h2>
+     <table class="table table-striped">
+     <thead>
+       <tr>
+         <th scope="col">SERIOUS CASES</th>
+         <th scope="col">MILD CASES</th>
+         <th scope="col">DATE</th>
+       </tr>
+     </thead>
+     <tbody>
+      <%if(caseHistory===null||caseHistory.lenghth===0){%>
+        <h5>No case history!<h5>
+      <%}else{%>
+        <%caseHistory.forEach(function(element){%>
         <tr>
-          <th>Mild Cases</th>
-          <th>Serious Cases</th> 
-          <th>Date and Time</th>
+            <td><%=element.seriousCaseHistory%></td>
+            <td><%=element.mildCaseHistory%></td>
+            <td><%=element.date%></td>
         </tr>
-      </thead>
-      <tbody>
-          <%if(caseHistory===null||caseHistory.lenghth===0){%>
-            <h5>No case history!<h5>
-          <%}else{%>
-            <%caseHistory.forEach(function(element){%>
-            <tr>
-                <td><%=element.mildCaseHistory%></td>
-                <td><%=element.seriousCaseHistory%></td>
-                <td><%=element.date%></td>
-            </tr>
-           <% })%>
-        <%}%>
-      </tbody>
-    </table>
-  </div>
+       <% })%>
+    <%}%>
+     </tbody>
+   </table>
+   </div>

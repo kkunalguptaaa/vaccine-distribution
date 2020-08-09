@@ -1,36 +1,57 @@
 <header>
-  <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">Vaccine Distribution</a>
+  <nav class="navbar navbar-expand-lg  navbar-dark fixed-top ">  
+    <a class="navbar-brand" href="/"><img src="../images/number.png" style="height:50px; text-align: center;"> Vaccine Distribution</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+      <div class="navbar-nav ">
+        <a class="nav-item nav-link active" href="/">HOME <span class="sr-only">(current)</span></a>
         <% if (!locals.users){%>
-          <a  style="position:absolute; right: 85px;"  class="nav-item nav-link"href="/users/login">Login</a>
+          <a  style="position:absolute; right: 85px;"  class="nav-item nav-link active"href="/users/login">LOGIN</a>
         <%} else {%>
-          <a  style="float: left;" class="nav-item nav-link" href="/users/profile">Profile</a>
+          <a  style="float: left;" class="nav-item nav-link active" href="/users/profile">PROFILE</a>
             <%if(users.level===0){%>
-              <a  style="float: left;" class="nav-item nav-link" href="/users/addStates">Add a State</a>
-              <a  style="float: left;" class="nav-item nav-link" href="/users/addProductionCentres">Add a production Centre</a>
+              <a  style="float: left;" class="nav-item nav-link active" href="/users/addStates">ADD STATE</a>
+              <a  style="float: left;" class="nav-item nav-link active" href="/users/addProductionCentres">ADD PRODUCTION CENTER</a>
             <% }if(users.level===1){%>
-              <a  style="float: left;" class="nav-item nav-link" href="/users/addHospitals">Add a Hospital</a>
+              <a  style="float: left;" class="nav-item nav-link active" href="/users/addHospitals">ADD HOSPITAL</a>
             <%}if(users.level===2){%>
-              <a  style="float: left;" class="nav-item nav-link" href="/hospitals/uploadCases">Upload Cases</a>
+              <a  style="float: left;" class="nav-item nav-link active" href="/hospitals/uploadCases">UPLOAD CASES</a>
             <%}if(users.level===3){%>
-              <a  style="float: left;" class="nav-item nav-link" href="/hospitals/uploadVaccine">Upload Vaccine</a>
+              <a  style="float: left;" class="nav-item nav-link active" href="/hospitals/uploadVaccine">UPLOAD VACCINE</a>
             <%}if(users.level!==3){%>
-              <a  style="float: left;" class="nav-item nav-link" href="/hospitals/caseHistory">Case History</a>
+              <a  style="float: left;" class="nav-item nav-link active" href="/hospitals/caseHistory">CASE HISTORY</a>
             <%}%>
-            <a  style="float: left;" class="nav-item nav-link" href="/hospitals/vaccineHistory">Vaccine History</a>
+            <a  style="float: left;" class="nav-item nav-link active" href="/hospitals/vaccineHistory">VACCINE HISTORY</a>
             <%if(users.level===0||users.level===1){%>
-              <a  style="float: left;" class="nav-item nav-link" href="/hospitals/distributionStatus">Distribution Status</a>
-              <a  style="float: left;" class="nav-item nav-link" href="/hospitals/distributionStatusHistory">Distribution Status History</a>
+              <a  style="float: left;" class="nav-item nav-link active" href="/hospitals/distributionStatus">DISTRIBUTION STATUS</a>
+              <a  style="float: left;" class="nav-item nav-link active" href="/hospitals/distributionStatusHistory">DISTRIBUTION HISTORY</a>
             <%}%>  
-          <a style="position:absolute; right: 20px;"  class="nav-item nav-link" href="/users/logout">Logout</a>
+            <a style="position:absolute; right: 20px;"  class="nav-item nav-link active " href="/users/logout">LOGOUT</a>
         <%} %>
       </div>
     </div>
   </nav>
 </header>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+            $(".menu-icon").on("click", function() {
+                  $("nav ul").toggleClass("showing");
+            });
+      });
+
+      // Scrolling Effect
+
+      $(window).on("scroll", function() {
+            if($(window).scrollTop()) {
+                  $('nav').addClass('black');
+            }
+
+            else {
+                  $('nav').removeClass('black');
+            }
+      })
+</script>

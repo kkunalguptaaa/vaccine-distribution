@@ -1,37 +1,83 @@
 <%-include('msg');%> 
-<div class="container">
-    <div class="d-flex justify-content-between">
-      <h2>profile</h2>     
-      <a class="btn btn-warning" href="/users/logoutAll">logout All</a>
-      <%if(user.level===0||user.level===1){%>
-        <a class="btn btn-primary" href="/hospitals/distributeVaccine">Distribute Vaccine</a>
+  <style>
+    body
+   {
+     margin: 0;
+     padding: 0;
+     font-family: sans-serif;
+     background: url(../images/profilebg.jpg);
+     background-size: cover;
+   }
+   #color-overlay {
+     position: relative;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background-color: black;
+     opacity: 0.3;
+     }
+     .box
+     {
+       position: absolute;
+       top: 50%;
+       left: 50%;
+       transform: translate(-50%,-50%);
+       width: 500px;
+       padding: 40px;
+       background: rgba(0,0,0,.8);
+       box-sizing: border-box;
+       box-shadow: 0 15px 25px rgba(0,0,0,.5);
+       border-radius: 10px;
+     }
+      .box h2
+     {
+       margin: 0 0 30px;
+       padding: 0;
+       color: #fff;
+       text-align: center;
+     }
+     p{
+         color: #888;
+         text-align: center;
+     }
+     hr{
+       height: 1px;
+       background-color: #ccc;
+       border: none;
+     }
+     .btn-primary
+     {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+     }
+     
+</style>
+<div>
+    <div id="color-overlay"></div>
+   <div class="box">
+   <h2>PROFILE</h2>
+   <hr>
+   <div style="text-align: center;">
+   <p style="font-size:2em;">USERNAME: <%=user.username%> </p>
+   </div>
+   <hr>
+   <div>
+      <%if(user.level!==3){%>
+        <p>MILD CASES:<%=user.mildCases%></p>
+        <p>SERIOUS CASES:<%=user.seriousCases%> </p>
+      <%}%>
+       <p>TOTAL VACCINES:<%=user.vaccines%> </p>
+       <p>You are Loged In :<%=user.tokens.length%></p>
+       <p>
+       <a type="button" class="btn btn-warning" data-toggle="button" aria-pressed="false" style="margin-right: 8em;" href="/users/logoutAll">LOGOUT ALL </a>
+       <%if(user.level===0||user.level===1){%>
+        <a type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false"href="/hospitals/distributeVaccine">DISTRIBUTE</a>
       <%}%>
       <%if(user.level===2){%>
-        <a class="btn btn-primary" href="/hospitals/vaccineReceived">Vaccine Received</a>
+        <a type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false"href="/hospitals/vaccineReceived">VACCINE RECEIVED </a>
       <%}%>
-    </div>  
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Username</th> 
-          <%if(user.level!==3){%>
-            <th>Mild Cases</th>
-            <th>Serious Cases</th>
-          <%}%>
-          <th>Total Vaccines</th>
-          <th>You are Loged In  :</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><%=user.username%></td>
-          <%if(user.level!==3){%>
-            <td><%=user.mildCases%></td>
-            <td><%=user.seriousCases%></td>
-          <%}%>
-          <td><%=user.vaccines%></td>
-          <td><%=user.tokens.length%> device</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+       </p>
+   </div>
+</div>
