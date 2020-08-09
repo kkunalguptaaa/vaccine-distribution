@@ -18,6 +18,31 @@ const userSchema= new mongoose.Schema({
         type:Number,
         default:0
     },
+    vaccines:{
+        type:Number,
+        default:0
+    },
+    vaccineHistory:[{
+            receivedVaccines:{
+                type:Number
+            },
+            date:{
+                type:Date,
+                default: Date.now
+            }
+    }],
+    caseHistory:[{
+            seriousCaseHistory:{
+                type:Number
+            },
+            mildCaseHistory:{
+                type:Number
+            },
+            date:{
+                type:Date,
+                default: Date.now
+            }
+    }],
     tokens:[{
         token:{
             type:String,

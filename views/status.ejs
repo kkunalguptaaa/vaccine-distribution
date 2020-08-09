@@ -1,0 +1,30 @@
+<%-include('msg');%> 
+<div class="container">
+    <div class="d-flex justify-content-between">
+      <h2>Vaccine History</h2>     
+    </div>  
+    <table class="table table-striped">
+      <thead>
+        <tr>
+           <th>State</th>
+          <th>No. of vaccines</th> 
+          <th>Date and Time</th>
+        </tr>
+      </thead>
+      <tbody>
+          <%if(childs===null||childs.lenghth===0){%>
+            <h5>No vaccine history!<h5>
+          <%}else{%>
+            <%childs.forEach(function(element){%>
+            <%if(element.vaccineHistory!==null&&element.vaccineHistory.length!==0){%>
+                <tr>
+                    <td><%=element.username%></td>
+                    <td><%=element.vaccineHistory[element.vaccineHistory.length-1].receivedVaccines%></td>
+                    <td><%=element.vaccineHistory[element.vaccineHistory.length-1].date%></td>
+                </tr>
+            <%}%>
+           <% })%>
+        <%}%>
+      </tbody>
+    </table>
+  </div>

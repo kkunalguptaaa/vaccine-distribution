@@ -3,22 +3,34 @@
     <div class="d-flex justify-content-between">
       <h2>profile</h2>     
       <a class="btn btn-warning" href="/users/logoutAll">logout All</a>
+      <%if(user.level===0||user.level===1){%>
+        <a class="btn btn-primary" href="/hospitals/distributeVaccine">Distribute Vaccine</a>
+      <%}%>
+      <%if(user.level===2){%>
+        <a class="btn btn-primary" href="/hospitals/vaccineReceived">Vaccine Received</a>
+      <%}%>
     </div>  
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>_id</th>
           <th>Username</th> 
-          <th>Mild Cases</th>
-          <th>Serious Cases</th>
+          <%if(user.level!==3){%>
+            <th>Mild Cases</th>
+            <th>Serious Cases</th>
+          <%}%>
+          <th>Total Vaccines</th>
+          <th>You are Loged In  :</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><%=user._id%></td>
           <td><%=user.username%></td>
-          <td><%=user.mildCases%></td>
-          <td><%=user.seriousCases%></td>
+          <%if(user.level!==3){%>
+            <td><%=user.mildCases%></td>
+            <td><%=user.seriousCases%></td>
+          <%}%>
+          <td><%=user.vaccines%></td>
+          <td><%=user.tokens.length%> device</td>
         </tr>
       </tbody>
     </table>

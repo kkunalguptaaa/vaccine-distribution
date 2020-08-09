@@ -1,0 +1,8 @@
+<form action="/hospitals/uploadVaccine" method="POST">
+    <%-include('msg');%>
+    <div class="form-group">
+        <label for="vaccines">vaccines: </label>
+        <input type="number" min="0" class="form-control" id="vaccines" name="vaccines"  value="<%=typeof info!='undefined' ? info.vaccines:''%>" required>
+    </div>
+    <button type="number" min="0" class="btn btn-default">Submit</button>
+</form>

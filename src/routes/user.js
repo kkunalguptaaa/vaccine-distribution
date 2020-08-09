@@ -136,6 +136,7 @@ userRouter.get('/logoutAll',authenticate.checkAuth,async(req,res)=>{
     }
 
 })
+
 //renderd login and signup pages,profile
 userRouter.get('/addStates',authenticate.checkAuth,authenticate.ckeckLevel({level:0}),async(req,res)=>{
     res.render('addStates',{title:"Add States"});
@@ -149,7 +150,7 @@ userRouter.get('/addHospitals',authenticate.checkAuth,authenticate.ckeckLevel({l
 userRouter.get('/login',authenticate.isUserAlreadyLogedIn({successRedirect:'/users/profile'}),async(req,res)=>{
     res.render('login',{title:"Login"});
 })
-userRouter.get('/profile',authenticate.checkAuth,authenticate.fetchCases,async(req,res)=>{
+userRouter.get('/profile',authenticate.checkAuth,async(req,res)=>{
     res.render('profile',{title:"Profile",user:req.user});
 })
 

@@ -8,18 +8,27 @@
       <div class="navbar-nav">
         <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
         <% if (!locals.users){%>
-          <a  style="position:absolute; right: 85px;"  class="nav-item nav-link"href="/users/login">login</a>
+          <a  style="position:absolute; right: 85px;"  class="nav-item nav-link"href="/users/login">Login</a>
         <%} else {%>
-          <a  style="float: left;" class="nav-item nav-link" href="/users/profile">profile</a>
+          <a  style="float: left;" class="nav-item nav-link" href="/users/profile">Profile</a>
             <%if(users.level===0){%>
               <a  style="float: left;" class="nav-item nav-link" href="/users/addStates">Add a State</a>
               <a  style="float: left;" class="nav-item nav-link" href="/users/addProductionCentres">Add a production Centre</a>
             <% }if(users.level===1){%>
               <a  style="float: left;" class="nav-item nav-link" href="/users/addHospitals">Add a Hospital</a>
             <%}if(users.level===2){%>
-              <a  style="float: left;" class="nav-item nav-link" href="/hospitals/uploadCases">upload Cases</a>
+              <a  style="float: left;" class="nav-item nav-link" href="/hospitals/uploadCases">Upload Cases</a>
+            <%}if(users.level===3){%>
+              <a  style="float: left;" class="nav-item nav-link" href="/hospitals/uploadVaccine">Upload Vaccine</a>
+            <%}if(users.level!==3){%>
+              <a  style="float: left;" class="nav-item nav-link" href="/hospitals/caseHistory">Case History</a>
             <%}%>
-          <a style="position:absolute; right: 20px;"  class="nav-item nav-link" href="/users/logout">logout</a>
+            <a  style="float: left;" class="nav-item nav-link" href="/hospitals/vaccineHistory">Vaccine History</a>
+            <%if(users.level===0||users.level===1){%>
+              <a  style="float: left;" class="nav-item nav-link" href="/hospitals/distributionStatus">Distribution Status</a>
+              <a  style="float: left;" class="nav-item nav-link" href="/hospitals/distributionStatusHistory">Distribution Status History</a>
+            <%}%>  
+          <a style="position:absolute; right: 20px;"  class="nav-item nav-link" href="/users/logout">Logout</a>
         <%} %>
       </div>
     </div>
