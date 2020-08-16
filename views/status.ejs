@@ -1,4 +1,4 @@
-<%-include('msg');%> 
+
   <style>
     body
        {
@@ -60,6 +60,7 @@
      </style>
    <div id="color-overlay"></div>
        <div class="box">
+        <%-include('msg');%> 
        <h2>VACCINE DISTRIBUTION STATUS</h2>
      <table class="table table-striped">
      <thead>
@@ -78,7 +79,7 @@
             <tr>
                 <td><%=element.username%></td>
                 <td><%=element.vaccineHistory[element.vaccineHistory.length-1].receivedVaccines%></td>
-                <td><%=element.vaccineHistory[element.vaccineHistory.length-1].date%></td>
+                <td><%=element.vaccineHistory[element.vaccineHistory.length-1].date.toString().substr(4, 20)%></td>
             </tr>
         <%}%>
        <% })%>

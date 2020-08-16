@@ -58,8 +58,8 @@
    
      </style>
    <div id="color-overlay"></div>
-   <%-include('msg');%> 
        <div class="box">
+        <%-include('msg');%> 
        <h2>HISTORY OF CASES</h2>
      <table class="table table-striped">
      <thead>
@@ -77,7 +77,7 @@
         <tr>
             <td><%=element.seriousCaseHistory%></td>
             <td><%=element.mildCaseHistory%></td>
-            <td><%=element.date%></td>
+            <td><%=element.date.toString().substr(4, 20)%></td>
         </tr>
        <% })%>
     <%}%>

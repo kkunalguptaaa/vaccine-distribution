@@ -38,7 +38,7 @@ hospitalRouter.post('/uploadCases',authenticate.checkAuth,authenticate.ckeckLeve
                 mildCaseHistory:central.mildCases
         });
         await central.save()
-        res.send(req.user)
+        res.render('uploadCases',{title:'Upload Cases',success_msg:"cases uploaded successfully!"})
     } catch (error) {
         console.log(error)
         res.status(500).send(error)
@@ -61,7 +61,7 @@ hospitalRouter.post('/uploadVaccine',authenticate.checkAuth,authenticate.ckeckLe
                 receivedVaccines:central.vaccines
         });
         await central.save()
-        res.send(req.user)
+        res.render('uploadVaccine',{title:'Upload Vaccine',success_msg:"vaccine uploaded successfully!"})
     } catch (error) {
         console.log(error)
         res.status(500).send(error)

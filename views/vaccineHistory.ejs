@@ -58,8 +58,8 @@
    
      </style>
    <div id="color-overlay"></div>
-   <%-include('msg');%> 
        <div class="box">
+        <%-include('msg');%> 
        <h2>HISTORY OF VACCINES</h2>
      <table class="table table-striped">
      <thead>
@@ -75,7 +75,7 @@
         <%vaccineHistory.forEach(function(element){%>
         <tr>
             <td><%=element.receivedVaccines%></td>
-            <td><%=element.date%></td>
+            <td><%=element.date.toString().substr(4, 20)%></td>
         </tr>
        <% })%>
     <%}%>

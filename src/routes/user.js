@@ -153,5 +153,8 @@ userRouter.get('/login',authenticate.isUserAlreadyLogedIn({successRedirect:'/use
 userRouter.get('/profile',authenticate.checkAuth,async(req,res)=>{
     res.render('profile',{title:"Profile",user:req.user});
 })
+userRouter.get('/heatmap',(req,res)=>{
+    res.render('heatmap',{title:"INDIA MAP"})
+})
 
 module.exports=userRouter;
