@@ -13,7 +13,7 @@ const userRouter=express.Router();
 
 userRouter.get('/addCentral',async(req,res)=>{
     const user= new User({
-        username:"central",
+        username:"centralgovt",
         password:"123",
         level:0,
     })
@@ -139,7 +139,7 @@ userRouter.get('/logoutAll',authenticate.checkAuth,async(req,res)=>{
 
 //renderd login and signup pages,profile
 userRouter.get('/addStates',authenticate.checkAuth,authenticate.ckeckLevel({level:0}),async(req,res)=>{
-    res.render('addStates',{title:"Add Sector"});
+    res.render('addStates',{title:"Add States"});
 })
 userRouter.get('/addProductionCentres',authenticate.checkAuth,authenticate.ckeckLevel({level:0}),async(req,res)=>{
     res.render('addProductionCentres',{title:"Add Production Centres"});
@@ -152,6 +152,9 @@ userRouter.get('/login',authenticate.isUserAlreadyLogedIn({successRedirect:'/use
 })
 userRouter.get('/profile',authenticate.checkAuth,async(req,res)=>{
     res.render('profile',{title:"Profile",user:req.user});
+})
+userRouter.get('/heatmap',(req,res)=>{
+    res.render('heatmap',{title:"INDIA MAP"})
 })
 
 module.exports=userRouter;
