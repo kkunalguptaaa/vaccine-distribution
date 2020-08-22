@@ -8,6 +8,7 @@ body{
 nav{
   padding: 0 20px;
   background:rgba(0,0,0,0.65);
+  font-family:sans-serif; ;
 }
   nav.black {
             background: #292c2f;

@@ -121,10 +121,21 @@ hospitalRouter.get('/distributeVaccine',authenticate.checkAuth,async(req,res)=>{
         for (const state of states) {
          if(state.level!==3){
             //state_vaccineMildCases is for both hospitals and states
-            var state_vaccineMildCases=Math.floor((vaccineMildCases*state.mildCases)/mildCasesCopy);
-            var state_vaccineSeriousCases=Math.floor((vaccineSeriousCases*state.seriousCases)/seriousCasesCopy);
+            if(mildCasesCopy===0){
+                var state_vaccineMildCases=0; //if mild case in higher authorities are zero then they 
+            }
+            else{
+                var state_vaccineMildCases=Math.floor((vaccineMildCases*state.mildCases)/mildCasesCopy);
+            }
+            if(seriousCasesCopy===0){
+                var state_vaccineSeriousCases=0;
+            }
+            else{
+                var state_vaccineSeriousCases=Math.floor((vaccineSeriousCases*state.seriousCases)/seriousCasesCopy);
+            }
             var state_totalVaccines=state_vaccineMildCases+state_vaccineSeriousCases;
             state.vaccines=state.vaccines+state_totalVaccines;
+            state.totalReceivedVaccines= state.totalReceivedVaccines+state_totalVaccines;
             state.vaccineHistory.push({receivedVaccines:state_totalVaccines});
             await state.save()
           }
@@ -190,24 +201,78 @@ hospitalRouter.get('/vaccineReceived',authenticate.checkAuth,authenticate.ckeckL
         res.status(500).send(e)
     }
 })
-hospitalRouter.get('/vaccineHistory',authenticate.checkAuth,(req,res)=>{
-    res.render('vaccineHistory',{title:'Vaccine History',vaccineHistory:req.user.vaccineHistory})
+hospitalRouter.get('/vaccineReceivedPatient',authenticate.checkAuth,authenticate.ckeckLevel({level:4}),async(req,res)=>{
+    try {
+        const ownerHospital=await User.findById(req.user.owner);
+        ownerHospital.vaccineReceivedPatient=ownerHospital.vaccineReceivedPatient+1;
+        await ownerHospital.save();
+        const ownerState=await User.findById(ownerHospital.owner);
+        ownerState.vaccineReceivedPatient=ownerState.vaccineReceivedPatient+1;
+        await ownerState.save();
+        const central=await User.findById(ownerState.owner);
+        central.vaccineReceivedPatient=central.vaccineReceivedPatient+1;
+        await central.save();
+        const success_msg="You record saved successfully!"
+        res.render('profile',{title:"Profile",user:req.user,success_msg});
+    }
+    catch(e){
+        console.log(e)
+        res.status(500).send(e)
+    }
 })
-hospitalRouter.get('/caseHistory',authenticate.checkAuth,(req,res)=>{
-    if(req.level===3){
+hospitalRouter.get('/verifyVaccineUsage',authenticate.checkAuth,async(req,res)=>{
+    try{
+        if(req.user.level===2||req.user.level===3||req.user.level===4){
+            return  res.status(403).send("you are not permitted to perform the task..!")
+        }
+        const childs=await User.find({level:{$ne:3},owner:req.user._id});
+        res.render('verifyVaccineUsage',{title:'Verify Vaccine Usage',childs})
+    }
+    catch(e){
+
+    }
+}) 
+hospitalRouter.get('/vaccineHistory',authenticate.checkAuth,(req,res)=>{
+    if(req.level===4){
         return  res.status(403).send("you are not permitted to perform the task..!")
     }
-    res.render('caseHistory',{title:'Case History',caseHistory:req.user.caseHistory})
+    var vaccines=[];
+    var dates=[];
+    if(req.user.vaccineHistory!==null||req.user.vaccineHistory.lenghth!==0){
+        req.user.vaccineHistory.forEach(element => {
+            vaccines.push(element.receivedVaccines);
+            var date=element.date.toString().substr(8, 2).replace(/ /g,'');
+            dates.push(date.toString());
+        });
+    }
+    res.render('vaccineHistory',{title:'Vaccine History',vaccines,dates})
+})
+hospitalRouter.get('/caseHistory',authenticate.checkAuth,(req,res)=>{
+    if(req.level===3||req.level===4){
+        return  res.status(403).send("you are not permitted to perform the task..!")
+    }
+    var mildCases=[];
+    var seriousCases=[];
+    var dates=[];
+    if(req.user.caseHistory!==null||req.user.caseHistory.lenghth!==0){
+        req.user.caseHistory.forEach(element => {
+            seriousCases.push(element.seriousCaseHistory);
+            mildCases.push(element.mildCaseHistory);
+            var date=element.date.toString().substr(8, 2).replace(/ /g,'');
+            dates.push(date.toString());
+        });
+    }
+    res.render('caseHistory',{title:'Case History',mildCases,seriousCases,dates})
 })
 hospitalRouter.get('/distributionStatus',authenticate.checkAuth,async(req,res)=>{
-    if(req.user.level===3||req.user.level===2){
+    if(req.user.level===3||req.user.level===2||req.user.level===4){
         return  res.status(403).send("you are not permitted to perform the task..!")
     }
     const childs=await User.find({level:{$ne:3},owner:req.user._id});
     res.render('status',{title:'Distribution Status',childs})
 })
 hospitalRouter.get('/distributionStatusHistory',authenticate.checkAuth,async(req,res)=>{
-    if(req.user.level===3||req.user.level===2){
+    if(req.user.level===3||req.user.level===2||req.user.level===4){
         return  res.status(403).send("you are not permitted to perform the task..!")
     }
     const childs=await User.find({level:{$ne:3},owner:req.user._id});

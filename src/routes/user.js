@@ -13,7 +13,7 @@ const userRouter=express.Router();
 
 userRouter.get('/addCentral',async(req,res)=>{
     const user= new User({
-        username:"centralgovt",
+        username:"CENTRAL",
         password:"123",
         level:0,
     })
@@ -87,6 +87,26 @@ userRouter.post('/addHospitals',authenticate.checkAuth,authenticate.ckeckLevel({
             res.status(400).send(e)
         }
     })
+    userRouter.post('/addPatient',authenticate.checkAuth,authenticate.ckeckLevel({level:2}),async(req,res)=>{
+        const user=new User({username:req.body.username,owner:req.user._id,level:4});
+            try{
+                if(req.body.password!==req.body.confirmPassword){ 
+                    const error_msg="password and confirm password should be same..!";
+                    return res.render('addPatient',{title:"Add Patient",error_msg,info:req.body});
+                }
+                const existUser=await User.findOne({username:req.body.username});
+                if(existUser){
+                    const error_msg="A user with the given username is already registered..!";
+                    return res.render('addPatient',{title:"Add Patient",error_msg,info:req.body});
+                } 
+                await User.register(user,req.body.password);  
+                const success_msg=` ${user.username} is successfully registred..!`;
+                return res.render('addPatient',{title:"Add Patient",success_msg});
+            }
+            catch(e){
+                res.status(400).send(e)
+            }
+        })
     
 userRouter.post('/login',authenticate.isUserAlreadyLogedIn({successRedirect:'/users/profile'}),passport.authenticate('local', {failureRedirect: '/users/login',failureFlash: 'Invalid username or password.'}),authenticate.removeExpiredTokens,async(req,res)=>{
     try{
@@ -146,6 +166,9 @@ userRouter.get('/addProductionCentres',authenticate.checkAuth,authenticate.ckeck
 })
 userRouter.get('/addHospitals',authenticate.checkAuth,authenticate.ckeckLevel({level:1}),async(req,res)=>{
     res.render('addHospitals',{title:"Add Hospitals"});
+})
+userRouter.get('/addPatient',authenticate.checkAuth,authenticate.ckeckLevel({level:2}),async(req,res)=>{
+    res.render('addPatient',{title:"Add Patient"});
 })
 userRouter.get('/login',authenticate.isUserAlreadyLogedIn({successRedirect:'/users/profile'}),async(req,res)=>{
     res.render('login',{title:"Login"});

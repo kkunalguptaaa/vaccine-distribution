@@ -14,21 +14,25 @@
             <%if(users.level===0){%>
               <a  style="float: left;" class="nav-item nav-link active" href="/users/addStates">ADD STATE</a>
               <a  style="float: left;" class="nav-item nav-link active" href="/users/addProductionCentres">ADD PRODUCTION CENTER</a>
+              <a  style="float: left;" class="nav-item nav-link active" href="/hospitals/verifyVaccineUsage">VERIFY VACCINE</a>
+
             <% }if(users.level===1){%>
               <a  style="float: left;" class="nav-item nav-link active" href="/users/addHospitals">ADD HOSPITAL</a>
+              <a  style="float: left;" class="nav-item nav-link active" href="/hospitals/verifyVaccineUsage">VERIFY VACCINE</a>
             <%}if(users.level===2){%>
+              <a  style="float: left;" class="nav-item nav-link active" href="/users/addPatient">ADD PATIENT</a>
               <a  style="float: left;" class="nav-item nav-link active" href="/hospitals/uploadCases">UPLOAD CASES</a>
             <%}if(users.level===3){%>
               <a  style="float: left;" class="nav-item nav-link active" href="/hospitals/uploadVaccine">UPLOAD VACCINE</a>
-            <%}if(users.level!==3){%>
+            <%}if(users.level!==3&&users.level!==4){%>
               <a  style="float: left;" class="nav-item nav-link active" href="/hospitals/caseHistory">CASE HISTORY</a>
-            <%}%>
+            <%}if(users.level!==4){%>
             <a  style="float: left;" class="nav-item nav-link active" href="/hospitals/vaccineHistory">VACCINE HISTORY</a>
-            <%if(users.level===0||users.level===1){%>
+            <%}if(users.level===0||users.level===1){%>
               <a  style="float: left;" class="nav-item nav-link active" href="/hospitals/distributionStatus">DISTRIBUTION STATUS</a>
               <a  style="float: left;" class="nav-item nav-link active" href="/hospitals/distributionStatusHistory">DISTRIBUTION HISTORY</a>
             <%}%>  
-            <a style="position:absolute; right: 20px;"  class="nav-item nav-link active " href="/users/logout">LOGOUT</a>
+            <a style="position:absolute; right: 10px;"  class="nav-item nav-link active " href="/users/logout">LOGOUT</a>
         <%} %>
       </div>
     </div>

@@ -31,6 +31,14 @@ const userSchema= new mongoose.Schema({
                 default: Date.now
             }
     }],
+    vaccineReceivedPatient:{
+        type:Number,
+        default:0
+    },
+    totalReceivedVaccines:{
+        type:Number,
+        default:0
+    },
     caseHistory:[{
             seriousCaseHistory:{
                 type:Number

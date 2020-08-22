@@ -4,7 +4,7 @@
          margin: 0;
          padding: 0;
          font-family: sans-serif;
-         background: url(../images/table.jpg);
+         background: url(../images/try.png);
          background-size: cover;
        }
        #color-overlay {
@@ -57,9 +57,9 @@
          }
    
      </style>
-   <div id="color-overlay"></div>
+   <!-- <div id="color-overlay"></div>
        <div class="box">
-        <%-include('msg');%> 
+        <%#-include('msg');%> 
        <h2>HISTORY OF VACCINES</h2>
      <table class="table table-striped">
      <thead>
@@ -69,16 +69,99 @@
        </tr>
      </thead>
      <tbody>
-      <%if(vaccineHistory===null||vaccineHistory.lenghth===0){%>
+      <%#if(vaccineHistory===null||vaccineHistory.lenghth===0){%>
         <h5>No vaccine history!<h5>
-      <%}else{%>
-        <%vaccineHistory.forEach(function(element){%>
+      <%#}else{%>
+        <%#vaccineHistory.forEach(function(element){%>
         <tr>
-            <td><%=element.receivedVaccines%></td>
-            <td><%=element.date.toString().substr(4, 20)%></td>
+            <td><%#=element.receivedVaccines%></td>
+            <td><%#=element.date.toString().substr(4, 20)%></td>
         </tr>
-       <% })%>
-    <%}%>
+       <%#})%>
+    <%#}%>
      </tbody>
    </table>
+   </div> -->
+   
+   <div id="color-overlay"></div>
+   <div class="box" style="width: 600px;height: 500px;margin-top: 20px;">
+    <canvas id="myChart" style="background-color: transparent;"></canvas>
    </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+   <script>
+   var vaccines=[];
+    var dates=[];
+    vaccines.push(<%= vaccines %>);
+    var date=5;
+    for (let i=0;i<vaccines.length;i++){
+      dates.push(date + " Aug")
+      date=date+1;
+    }
+    console.log("m"+vaccines);
+    var ctx = document.getElementById('myChart').getContext('2d');
+    const xLabel=dates;
+    Chart.defaults.global.defaultFontFamily = 'montserrat';
+    Chart.defaults.global.defaultFontSize = 16;
+    Chart.defaults.global.defaultFontColor = 'rgb(255, 193, 7)';
+    var myChart = new Chart(ctx, {
+      height:260,
+        type: 'line',
+        data: {
+            labels:xLabel ,
+            datasets: [{
+                label: 'Vaccines',
+                data:vaccines,
+                backgroundColor:'rgba(233,111,52,0)',
+                borderColor: 'rgb(22, 144, 203)',
+                borderWidth: 2
+            }]
+        },
+        options: {
+          responsive: false,
+            width:500,
+            height:300,
+            scaleShowGridLines: false,
+            showScale: false,
+            maintainAspectRatio: this.maintainAspectRatio,
+            barShowStroke: false,
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+            display: true,
+            position:'top',
+            align:'end',
+            labels: {
+                // fontColor: 'rgb(255, 99, 132)'
+            }
+           },
+           title:{
+             display:true,
+            //  position:top,
+             fontSize:25,
+            //  fontColor: 'rgb(255, 99, 132)',
+            //  fontFamily:'montserrat',
+             text:'History of Vaccines'
+           },
+           tooltips: {
+            callbacks: {
+                labelColor: function(tooltipItem, chart) {
+                    return {
+                        borderColor: 'rgb(22, 144, 203)',
+                        backgroundColor: 'rgb(22, 144, 203)'
+                    };
+                },
+                labelTextColor: function(tooltipItem, chart) {
+                    return 'rgb(255, 99, 132)';
+                }
+            }
+        },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    </script>
